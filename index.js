@@ -60,6 +60,12 @@ async function run() {
             const query = { _id: ObjectId(id) }
             const deleted = await bookingCollection.deleteOne(query);
             res.send(deleted);
+        });
+        app.get('/booked/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const payment = await bookingCollection.findOne(query);
+            res.send(payment);
         })
 
     }
