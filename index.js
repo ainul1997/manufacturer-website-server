@@ -24,6 +24,7 @@ async function run() {
     try {
         await client.connect();
         const serviceCollection = client.db('manage-tool').collection('tools');
+        const bookingCollection = client.db('manage-tool').collection('booking');
 
         app.get('/tools', async (req, res) => {
             const query = {};
@@ -36,6 +37,13 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const result = await serviceCollection.findOne(query);
             res.send(result);
+        });
+
+        app.post('/booking', async (req, res) => {
+            const booking = req.body;
+            const result = await bookingCollection.insertOne(booking);
+            res.send(result);
+
         })
 
 
