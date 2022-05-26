@@ -63,6 +63,7 @@ async function run() {
             const deleted = await bookingCollection.deleteOne(query);
             res.send(deleted);
         });
+        // get booked/:id ObjectId api
         app.get('/booked/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
