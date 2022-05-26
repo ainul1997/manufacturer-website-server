@@ -41,14 +41,14 @@ async function run() {
             const result = await serviceCollection.findOne(query);
             res.send(result);
         });
-
+        // git post booked api
         app.post('/booked', async (req, res) => {
             const booking = req.body;
             const booked = await bookingCollection.insertOne(booking);
             res.send(booked);
 
         });
-
+        //get booked api
         app.get('/booked', async (req, res) => {
             const query = {};
             const cursor = bookingCollection.find(query);
