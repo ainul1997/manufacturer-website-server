@@ -24,7 +24,7 @@ async function run() {
     try {
         await client.connect();
         const serviceCollection = client.db('manage-tool').collection('tools');
-        const bookingCollection = client.db('manage-tool').collection('booking');
+        const bookingCollection = client.db('manage-tool').collection('booked');
 
         app.get('/tools', async (req, res) => {
             const query = {};
@@ -39,13 +39,27 @@ async function run() {
             res.send(result);
         });
 
-        app.post('/booking', async (req, res) => {
+        app.post('/booked', async (req, res) => {
             const booking = req.body;
-            const result = await bookingCollection.insertOne(booking);
+            const booked = await bookingCollection.insertOne(booking);
+            res.send(booked);
+
+        });
+
+        app.get('/booked', async (req, res) => {
+            const query = {};
+            const cursor = bookingCollection.find(query);
+            const booked = await cursor.toArray();
+            res.send(booked);
+        });
+
+        // delete a user
+        app.delete('/booking/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await bookingCollection.deleteOne(query);
             res.send(result);
-
         })
-
 
     }
     finally {
