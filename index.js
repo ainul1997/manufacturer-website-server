@@ -27,12 +27,14 @@ async function run() {
         const serviceCollection = client.db('manage-tool').collection('tools');
         const bookingCollection = client.db('manage-tool').collection('booked');
 
+        //get tools api
         app.get('/tools', async (req, res) => {
             const query = {};
             const cursor = serviceCollection.find(query);
             const services = await cursor.toArray();
             res.send(services);
         });
+        // get ObjectId api
         app.get('/tools/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
